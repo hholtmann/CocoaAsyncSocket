@@ -3477,6 +3477,12 @@ enum GCDAsyncUdpSocketConfig
 				return_from_block;
 			}
 			
+			status = setsockopt(self->socket4FD, IPPROTO_IP, IP_MULTICAST_IF, &nativeIface->sin_addr, sizeof(nativeIface->sin_addr));
+			if (status != 0) {
+				err = [self errnoErrorWithReason:@"Error in setsockopt() function"];
+				return_from_block;
+			}
+			
 			// Using IPv4 only
 			[self closeSocket6];
 			
